@@ -1,0 +1,84 @@
+🚀 PHASE 2 — BUILDING THE AION INTERPRETER
+    (Where your language actually executes code)
+    Now we will give life to this AST.
+    Your language will soon be able to run:
+        let x = 10 + 20 * 3;
+        print(x);
+    and produce:
+        70
+
+PHASE 2 — INTERPRETER
+    1. Interpreter takes AST and executes it.
+    2. It evaluates:
+    - Number literals
+    - Identifiers (variables)
+    - Prefix expressions (!, -)
+    - Infix expressions (+, -, *, /, <, >)
+    - Statements (let, return)
+    3. Interpreter needs:
+    - Environment (variable storage)
+    - Evaluation functions
+    - Expression evaluator
+    4. After Phase 2, AION becomes a real scripting language.
+
+We will now implement:
+👉 Step 1 — The Environment (variable store)
+    (a HashMap storing variable names → values)
+👉 Step 2 — An Object enum
+    (values at runtime like Number(10), Boolean(true), Null, etc.)
+👉 Step 3 — eval() function
+    to recursively evaluate AST nodes
+👉 Step 4 — Expression evaluation
+    math, comparison, negation, logical not
+👉 Step 5 — Let statement execution
+    so this works:
+        let x = 30;
+👉 Step 6 — Return statement evaluation
+
+Notes about the implementation
+    Interpreter is dynamic (no static typing).
+    Environment is a simple HashMap<String, Object> with get/set.
+    eval_program executes statements and respects return.
+    Object supports Integer, Boolean, and Null. (We’ll extend later.)
+    Prefix (!, -) and infix (+ - * / < > == !=) are supported.
+    Unknown identifiers evaluate to Null (we’ll improve this later).
+
+# INTERPRETER NOTE (PHASE 2 STEP 1)
+    1. Environment
+    - A HashMap storing variable name -> Object
+    - Methods: new(), get(name), set(name, value)
+
+    2. Object (runtime values)
+    - Integer(i64)
+    - Boolean(bool)
+    - Null
+
+    3. Eval flow
+    - eval_program(statements, env) -> executes statements in order, returns last value
+    - eval_statement handles let, return, expression-statement
+    - eval_expression handles literal, identifier, prefix, infix
+    - Return statements are handled by an internal EvalResult enum that bubbles the return value up
+
+    4. Prefix operators
+    - ! (logical not) -> !true = false, !0 = true
+    - - (negation) -> -5 = -5
+
+    5. Infix operators for integers
+    - +, -, *, /, <, >, ==, !=
+
+    6. Next learning topics to study:
+    - Borrowing & mutability in Rust for shared environments (Rc<RefCell<...>>) — for nested scopes & functions
+    - How interpreters handle function calls and closures
+    - Extending Object enum (Strings, Arrays, Hashes, Functions)
+    - Differences between interpreters and VMs
+
+=> What to study next (ask me in another prompt)
+    (When you’re ready, ask me to teach any of these)
+
+    Rust basics: ownership, borrowing, HashMap, enum, match
+    Runtime design: environment & scope chains
+    Eval strategies: AST interpreter vs bytecode VM
+    Rc + RefCell for shared mutable envs (required for closures / nested functions)
+    Writing REPL (read-eval-print-loop)
+
+

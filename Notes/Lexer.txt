@@ -1,0 +1,193 @@
+🟦 SECTION 1 — RUST BASICS (FOUNDATION FOR AION)
+1. What is Rust?
+    A systems programming language
+    As fast as C/C++ but memory-safe
+    Used for browsers, runtimes, blockchains, AI engines
+    Perfect for building languages, VMs, compilers
+
+2. Why Rust for AION?
+    Safety (no crashes due to memory issues)
+    Performance (needed for a runtime)
+    Industry respect (looks great on GitHub)
+
+3. Rust concepts to learn:
+    struct → like objects
+    enum → variants/tags
+    match → pattern matching
+    impl → methods attached to struct
+    Result and Option → safe error handling
+
+    Ownership & borrowing (important later)
+
+🟦 SECTION 2 — WHAT IS A PROGRAMMING LANGUAGE INTERNALLY?
+
+Every language (JS, Python, Go, etc.) performs these steps:
+
+1. Lexing (Tokenization)
+    Break raw text into small meaningful pieces → tokens.
+    Example:
+        let x = 10;
+        Becomes:
+            LET
+            IDENT("x")
+            ASSIGN
+            NUMBER("10")
+            SEMICOLON
+
+2. Parsing
+    Convert tokens into a structured tree → AST (Abstract Syntax Tree).
+    Example AST:
+        LetStatement(
+            name = "x",
+            value = NumberLiteral(10)
+        )
+
+3. Interpretation / Compilation
+    Interpretation → execute AST directly
+    Compilation → convert AST → bytecode or machine code
+
+4. Runtime
+    Handles:
+        memory
+        variables
+        functions
+        garbage collection
+        async execution
+        built-in APIs
+
+🟦 SECTION 3 — WHAT YOU BUILT TODAY (LEXER)
+    ✔ A lexer scans the code character by character.
+    ✔ It identifies patterns:
+        identifiers
+        numbers
+        operators
+        punctuation
+        keywords
+    ✔ A lexer converts input → tokens.
+        This is like how a frontend parser reads JSX:
+        <div> → opening tag token
+        className="box" → attribute token
+        </div> → closing tag token
+        But for AION we tokenize code.
+    Why lexer is important?
+        Because parsing is impossible without tokens.
+
+🟦 SECTION 4 — TOKEN TYPES (WHAT THEY MEAN)
+
+    You created an enum like:
+        Token::Let
+        Token::Ident("name")
+        Token::Number("123")
+        Token::LParen
+        Token::RParen
+        Each token represents a "word" in the programming language.
+
+🟦 SECTION 5 — HOW A LEXER WORKS INTERNALLY
+    1. read_char()
+        Moves forward in the input string.
+    2. skip_whitespace()
+        Ignores spaces, tabs, newlines.
+    3. read_identifier()
+        Reads variable names and keywords.
+    4. read_number()
+        Reads digits.
+    5. match keyword or identifier
+        let → Token::Let
+        x → Token::Ident
+    6. next_token()
+        Returns the next token each time it's called.
+
+🟦 SECTION 6 — WHAT YOU MUST STUDY NEXT FOR PARSER + AST
+    As we build the Parser, learn these topics:
+        1. What is an AST?
+            (A tree representation of code)
+                Example:
+                JS Code:
+                let x = 5 + 3;
+                AST:
+                    LetStatement
+                    name: x
+                    value: BinaryExpression
+                                left: NumberLiteral(5)
+                                operator: +
+                                right: NumberLiteral(3)
+        2. What is a recursive descent parser?
+            A parser that calls itself to parse sub-parts of expressions
+            Simple to implement
+            Great for custom languages like AION
+        3. Operator precedence
+            Why * happens before +.
+        4. Expression parsing
+            prefix expressions
+            infix expressions
+            grouping ()
+        5. Parser errors
+            Understanding how to detect invalid syntax.
+
+🟦 SECTION 7 — HIGH LEVEL: WHAT WE ARE ACTUALLY BUILDING
+
+    You are not just writing code.
+    You are creating:
+        a language
+        a compiler front-end
+        a runtime
+        a VM
+        a garbage collector
+        async engine
+        vector engine for AI
+        distributed execution
+    This is 10x deeper than frontend, and will transform your engineering level.
+    ✔ Understanding Rust basics
+    ✔ What a lexer does
+    ✔ What tokens are
+    ✔ How languages break input into symbols
+    ✔ What is a grammar
+    ✔ What is an AST
+    ✔ What parsing does
+    ✔ What a runtime is
+    ✔ Overview of bytecode & VM
+    ✔ Memory management basics
+    ✔ Why Rust is perfect for this work
+
+    # LEXER BASICS
+        1. A lexer/tokenizer converts raw source code into tokens.
+        2. A token is the smallest meaningful piece of code (identifier, number, operator).
+        3. The lexer scans characters one-by-one.
+        4. Important methods:
+        - read_char() → move forward in text
+        - skip_whitespace() → ignore spaces
+        - read_identifier() → read names like abc or x
+        - read_number() → read digits
+        5. Keywords are matched: let, fn, return, true, false, if, else.
+        6. next_token() returns one token at a time.
+        7. This is Phase 1 of building a compiler/language.
+    Rust modules must match the file system.
+    If my code contains:
+        pub mod ast;
+    Rust expects one of these files:
+        - src/ast.rs
+        - src/ast/mod.rs
+    If the file does not exist, Rust throws error E0583.
+        Rust crates can be:
+            1. Library crate → uses lib.rs (no main function required)
+            2. Binary crate → uses main.rs (must have fn main())
+    If Cargo.toml has no [lib] section, Rust assumes the crate is both:
+        - a library (lib.rs)
+        - AND a binary (main.rs)
+        So a missing main() causes error E0601.
+
+🟦 WHAT YOU HAVE BUILT SO FAR (Add to Notes.txt)
+    1. A lexer (tokenizer) that reads the program text character-by-character.
+    2. It converts raw text -> tokens like Let, Ident("x"), Number("10"), Semicolon.
+    3. This is the first part of creating a programming language.
+    4. Tests confirm the lexer behaves as expected.
+
+Languages treat '==' and '=' differently.
+    =  → assignment operator
+    == → equality operator
+    !  → logical not
+    != → not-equal operator
+    Lexer must look ahead one character to detect 2-character operators.
+
+
+

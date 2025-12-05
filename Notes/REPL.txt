@@ -1,0 +1,30 @@
+⭐ Build the REPL (Interactive AION Shell)
+    Here is why REPL is the best next move:
+
+    ✔ It makes your language feel REAL immediately
+        You will type:
+            aion> let x = 10;
+            aion> x + 5;
+            15
+
+    ✔ It showcases beautifully in your GitHub portfolio
+        Recruiters LOVE interactive demos.
+    ✔ It’s SIMPLE to build (only ~20 lines of code)
+        No complex parser changes needed.
+    ✔ It makes debugging future features easier
+        When we add functions, closures, arrays, strings, and AI-native features — REPL helps test instantly.
+    ✔ It’s the first milestone where your language becomes alive
+        This is the moment your project goes from “compiler code” to an actual tool.
+
+AION REPL:
+- Reads input line by line
+- Parses into AST
+- Evaluates using interpreter
+- Reuses the same environment across commands
+- Enables interactive testing for all future language features
+
+⭐ Build
+    cargo build
+⭐ STEP 4 — Run your REPL
+    ./target/debug/aion   || cargo run
+

@@ -1,0 +1,89 @@
+🟦 WHAT YOU WILL BUILD NEXT (the Parser)
+    Think of the parser like React’s reconciliation engine:
+        React turns JSX → virtual DOM tree
+        A parser turns AION code → AST (Abstract Syntax Tree)
+
+    Example:
+        let x = 10;
+        Becomes:
+            LetStatement
+                name: Ident("x")
+                value: NumberLiteral(10)
+
+🟦 What You Need to Learn Before Parser
+    1. What is an AST?  
+   - A tree representation of your source code.
+    2. What is a parser?  
+    - A tool that reads tokens and builds the AST.
+    3. What is a recursive descent parser?  
+    - A simple parser that calls itself to handle nested expressions.
+    4. What is operator precedence?  
+    - Tells the parser which operator to evaluate first (* before +).
+
+    Think of AST as:
+        The "Virtual DOM" for programming languages.                                                                                                                                        
+        The structure your interpreter/VM will execute later
+
+Example:
+    AION source code:
+        let x = 10;
+    Lexer produces tokens:
+        Let, Ident("x"), Assign, Number("10"), Semicolon
+    Parser converts tokens → AST:
+        Program
+            └── LetStatement
+                    ├── name: Identifier("x")
+                    └── value: NumberLiteral(10)
+
+⭐ WHAT YOU JUST DID
+    You created the basic nodes your language understands:
+    ✔ Statements
+        Let statement
+        Return statement
+        Expression as standalone
+    ✔ Expressions
+        Identifiers
+        Numbers
+    This is enough to parse minimal AION programs.
+
+AST BASICS:
+1. AST is a tree structure that represents the program.
+2. Lexer gives us tokens; parser uses them to build AST.
+3. AST nodes we created:
+   - Statement::LetStatement { name, value }
+   - Statement::ReturnStatement { value }
+   - Statement::ExpressionStatement(expr)
+4. Expression nodes:
+   - Identifier("x")
+   - NumberLiteral(10)
+5. AST is like the Virtual DOM for programming languages.
+6. Later, interpreter or VM will execute this AST.
+
+⭐ Explanation (Intermediate Level)
+    ✔ Parser holds:
+        lexer
+        current token
+        next token
+        This allows us to "look ahead" while parsing.
+    ✔ parse_program()
+        Loops until EOF and builds an array of statements.
+    ✔ parse_statement()
+        Right now only handles let statements.
+    ✔ parse_let_statement()
+        Minimal version:
+            Collects name
+        Ignores real expression (we add soon)
+
+Parser Helpers
+    - get_precedence(): tells parser how strong an operator is.
+    - expect_rparen(): ensures ')' is where we expect it.
+    Parser uses lookahead (current_token, next_token) to decide what to parse.
+
+Rust tip:
+    Inside impl Parser, calling Parser::method() can also be written as Self::method().
+    Self is preferred because if the struct name changes, code still works.
+
+
+
+                                                                                                                                                                                                    
+

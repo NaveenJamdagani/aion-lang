@@ -1,0 +1,92 @@
+In a language, expressions include:
+    10
+    x
+    5 + 3
+    3 * (4 + 1)
+    x + y * z
+
+The parser must understand:
+    precedence (* happens before +)
+    grouping (parentheses)
+    identifiers
+    number literals
+    prefix operators (!x, -x)
+    infix operators (x + y, x * y)
+    return expressions (later)
+    function calls (later)
+
+To do this, we use a well-known technique:
+
+⭐ Pratt Parsing (industry standard)
+    Used by:
+        Rust compiler
+        TypeScript
+        JavaScript engines
+        Many modern languages
+    But I will simplify it for you.
+
+Expression Parsing Basics (Intermediate)
+    1. Expressions are the "math and logic" parts of a program.
+    2. They must follow rules of precedence: * before +.
+    3. Parser must build correct AST structure for expressions.
+    4. Pratt Parsing is a technique that simplifies expression parsing.
+    5. We will implement:
+    - prefix expressions: -x, !x
+    - infix expressions: x + y, x * y
+    - grouping: (x + y)
+    6. This is the hardest part of building a programming language.
+    7. Once expressions work, the language becomes powerful.
+
+⭐ OUR GOAL FOR THIS PART
+    Add support for these:
+        let x = 5 + 3;
+        let y = x * 2;
+        let z = 10 - 4 + 1;
+    Meaning our parser must produce AST like:
+        LetStatement "x"
+        value: InfixExpression(
+                    left: NumberLiteral(5)
+                    operator: +
+                    right: NumberLiteral(3)
+                )
+
+Expression Parsing Summary
+    1. We are implementing Pratt Parsing.
+    2. Pratt parsing uses:
+    - Prefix parse functions (for !x, -x)
+    - Infix parse functions (for x + y)
+    3. Parser determines precedence to build correct AST shape.
+    4. After this part, AION can understand mathematical and logical expressions.
+    5. This is the hardest part of compiler front-end development.
+
+⭐ Example AST Display (What We Will Build)
+    For this code:
+        let x = 5 + 3 * 2;
+    AION will output:
+        {
+            "type": "LetStatement",
+            "name": "x",
+            "value": {
+                "type": "Infix",
+                "operator": "+",
+                "left": { "type": "NumberLiteral", "value": 5 },
+                "right": {
+                    "type": "Infix",
+                    "operator": "*",
+                    "left": { "type": "NumberLiteral", "value": 3 },
+                    "right": { "type": "NumberLiteral", "value": 2 }
+                }
+            }
+        }
+
+    AION AST will use JSON-like display format.
+    Benefits:
+    - easy to read
+    - industry standard
+    - supports debugging and future tools
+    - clear hierarchy for expressions
+
+
+
+
+
